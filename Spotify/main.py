@@ -18,7 +18,7 @@ def run_gui():
 #niw 
 
 
-    # Pasek boczny
+    # Pasek boczny zmieniam sobie to cos
     sidebar = tk.Frame(root, bg="black", width=200)
     sidebar.grid(row=0, column=0, rowspan=2, sticky="ns")
     
