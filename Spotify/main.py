@@ -8,17 +8,17 @@ def run_gui():
     root.title("Srotify")
     root.geometry("800x600")
     root.config(bg="#181818")
-    root.minsize(600, 400)
+    root.minsize(800, 400)
+    def entry_but():
+        entry=search_entry.get()
+        print(entry)
     
     # Konfiguracja grid layoutu dla dynamicznego dopasowania
     root.columnconfigure(0, weight=1)
     root.columnconfigure(1, weight=4)
     root.rowconfigure(1, weight=1)
 
-#niw 
-
-
-    # Pasek boczny zmieniam sobie to cos
+    # Pasek boczny
     sidebar = tk.Frame(root, bg="black", width=200)
     sidebar.grid(row=0, column=0, rowspan=2, sticky="ns")
     
@@ -36,8 +36,11 @@ def run_gui():
     search_label = tk.Label(top_bar, text="Search:", bg="#78DE78", fg="black")
     search_label.pack(side="left", padx=10)
     
-    search_entry = tk.Entry(top_bar, width=40, font=("Arial", 12))
+    search_entry = tk.Entry(top_bar, width=50, font=("Arial", 12))
     search_entry.pack(side="left", padx=5, pady=10)
+    
+    search_button = tk.Button(top_bar, text="Go!", bg="#27D75C", fg="black", command=entry_but)
+    search_button.pack(side="left", padx=10)
 
     # Sekcja główna na wyniki wyszukiwania
     main_content = tk.Frame(root, bg="#181818")
