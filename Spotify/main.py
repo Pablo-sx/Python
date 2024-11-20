@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 def run_gui():
-    # głowne okno łównego okna
+    # głowne okno
     root = tk.Tk()
     root.title("Srotify")
     root.geometry("800x600")
