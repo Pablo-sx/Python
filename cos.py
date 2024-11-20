@@ -1,1 +1,0 @@
-#nie wiem ci
