@@ -10,7 +10,7 @@ class SrotifyApp(tk.Tk):
         self.config(bg="#181818")
         self.minsize(800, 400)
 
-        self.frames = {}  # Słownik przechowujący różne widoki aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        self.frames = {}  # Słownik przechowujący różne widoki
         self.container = tk.Frame(self, bg="#181818")
         self.container.pack(fill="both", expand=True)
 
