@@ -17,7 +17,7 @@ def run_gui():
     root.columnconfigure(1, weight=4)
     root.rowconfigure(1, weight=1)
 
-    # menu boczny
+    # menu boczne
     sidebar = tk.Frame(root, bg="black", width=200)
     sidebar.grid(row=0, column=0, rowspan=2, sticky="ns")
     
