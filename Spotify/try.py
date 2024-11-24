@@ -9,6 +9,8 @@ def changing_color(label):
     create_side_place.config(bg=side_bar_color)
     liked_side_place.config(bg=side_bar_color)
 
+    label.config(bg='white')
+
 def info_show(event):
     label_info.place(x=event.x_root - root.winfo_rootx() + 10, 
                      y=event.y_root - root.winfo_rooty() + 10)
@@ -18,6 +20,13 @@ def info_hide(event):
     label_info.config(text="")
     label_info.place_forget()
 
+def extend_side_bar():
+    side_bar.config(width=200)
+    side_bar_btn.config(image=image_close, command=hide_side_bar)
+
+def hide_side_bar():
+    side_bar.config(width=45)
+    side_bar_btn.config(image=image_side_bar,command=extend_side_bar)
 
 root = tk.Tk()
 root.geometry("800x600")
@@ -37,11 +46,12 @@ image_browse=tk.PhotoImage(file='Img/browse.png')
 image_create=tk.PhotoImage(file='Img/create.png')
 image_liked=tk.PhotoImage(file='Img/liked.png')
 image_info=tk.PhotoImage(file=('Img/info.png'))
+image_close=tk.PhotoImage(file='Img/close.png')
 
 side_bar = tk.Frame(root, bg=side_bar_color, width=45)
 
 #przyciski w side bar
-side_bar_btn = tk.Button(side_bar, bg=side_bar_color, image=image_side_bar, bd=0, activebackground=side_bar_color)
+side_bar_btn = tk.Button(side_bar, bg=side_bar_color, image=image_side_bar, bd=0, activebackground=side_bar_color, command=extend_side_bar)
 home_btn = tk.Button(side_bar, bg=side_bar_color, image=image_home, 
     bd=0, activebackground=side_bar_color, 
     command=lambda: changing_color(home_side_place)
