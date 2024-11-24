@@ -35,37 +35,27 @@ def hide_side_bar():
 
 def home_page():
     home_page_frame=tk.Frame(page_frame,bg=root_color)
-
     lb=tk.Label(home_page_frame, text="Home Page", font=('arial', 50)).place(x=100, y=200)
-
     home_page_frame.pack(fill=tk.BOTH, expand=True)
 
 def library_page():
     library_page_frame=tk.Frame(page_frame,bg=root_color)
-
     lb=tk.Label(library_page_frame, text="Library page", font=('arial', 50)).place(x=100, y=200)
-
     library_page_frame.pack(fill=tk.BOTH, expand=True)
 
 def browse_page():
     browse_page_frame=tk.Frame(page_frame,bg=root_color)
-
     lb=tk.Label(browse_page_frame, text="Browse page", font=('arial', 50)).place(x=100, y=200)
-
     browse_page_frame.pack(fill=tk.BOTH, expand=True)
 
 def create_page():
     create_page_frame=tk.Frame(page_frame,bg=root_color)
-
     lb=tk.Label(create_page_frame, text="Create page", font=('arial', 50)).place(x=100, y=200)
-
     create_page_frame.pack(fill=tk.BOTH, expand=True)
 
 def liked_page():
     liked_page_frame=tk.Frame(page_frame,bg=root_color)
-
     lb=tk.Label(liked_page_frame, text="Liked page", font=('arial', 50)).place(x=100, y=200)
-
     liked_page_frame.pack(fill=tk.BOTH, expand=True)
 
 #kolory dla programu
@@ -125,7 +115,6 @@ liked_btn = tk.Button(side_bar, bg=side_bar_color, image=image_liked,
 info_btn = tk.Button(side_bar, bg=side_bar_color, image=image_info, 
     bd=0, activebackground=side_bar_color
 )
-
 
 #pasek przy ikonach side bar
 home_side_place = tk.Label(side_bar, bg='white')
