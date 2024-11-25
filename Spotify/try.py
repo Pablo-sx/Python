@@ -42,7 +42,7 @@ def library_page():
     library_page_frame=tk.Frame(page_frame,bg=root_color)
     lb=tk.Label(library_page_frame, text="Library page", font=('arial', 50)).place(x=100, y=200)
     library_page_frame.pack(fill=tk.BOTH, expand=True)
-
+    
 def browse_page():
     browse_page_frame=tk.Frame(page_frame,bg=root_color)
     lb=tk.Label(browse_page_frame, text="Browse page", font=('arial', 50)).place(x=100, y=200)
