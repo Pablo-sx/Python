@@ -1,6 +1,12 @@
 import tkinter as tk
 from tkinter import messagebox
 
+#kolory dla programu
+side_bar_color = '#383838'
+root_color='gray'
+
+########################################################################## FUNKCJE ##########################################################################
+
 #zmiana pasek pojawiający się przy ikonach w side bar
 def changing_color(label, page):
     home_side_place.config(bg=side_bar_color)
@@ -58,9 +64,7 @@ def liked_page():
     lb=tk.Label(liked_page_frame, text="Liked page", font=('arial', 50)).place(x=100, y=200)
     liked_page_frame.pack(fill=tk.BOTH, expand=True)
 
-#kolory dla programu
-side_bar_color = '#383838'
-root_color='gray'
+########################################################################## ELEMENTY W OKNIE ##########################################################################
 
 root = tk.Tk()
 root.geometry("800x600")
@@ -122,6 +126,8 @@ library_side_place = tk.Label(side_bar, bg=side_bar_color)
 browse_side_place = tk.Label(side_bar, bg=side_bar_color)
 create_side_place = tk.Label(side_bar, bg=side_bar_color)
 liked_side_place = tk.Label(side_bar, bg=side_bar_color)
+
+########################################################################## ROZMIESZCZANIE ELEMENTÓW W OKNIE ##########################################################################
 
 side_bar.pack(side=tk.LEFT, fill="y", pady=3, padx=3)
 
