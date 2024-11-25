@@ -3,7 +3,8 @@ from tkinter import messagebox
 
 #kolory dla programu
 side_bar_color = '#383838'
-root_color='gray'
+top_bar_color = '#383838'
+root_color='#181818'
 
 ########################################################################## FUNKCJE ##########################################################################
 
@@ -64,6 +65,11 @@ def liked_page():
     lb=tk.Label(liked_page_frame, text="Liked page", font=('arial', 50)).place(x=100, y=200)
     liked_page_frame.pack(fill=tk.BOTH, expand=True)
 
+def entry_but():
+    entry=search.get()
+    print(entry)
+
+
 ########################################################################## ELEMENTY W OKNIE ##########################################################################
 
 root = tk.Tk()
@@ -82,8 +88,20 @@ image_info=tk.PhotoImage(file=('Img/info.png'))
 image_close=tk.PhotoImage(file='Img/close.png')
 
 #web frames
-side_bar = tk.Frame(root, bg=side_bar_color, width=45)
 page_frame=tk.Frame(root)
+side_bar = tk.Frame(root, bg=side_bar_color, width=45)
+top_bar = tk.Frame(root, bg=top_bar_color, height=45)
+
+search=tk.Entry(top_bar, width=70)
+search_label = tk.Label(top_bar, text="Search:", bg="#78DE78", fg="black")
+search_btn = tk.Button(top_bar, text="Go!", bg="#27D75C", fg="black", command=entry_but)
+
+home_page_lb=tk.Label(side_bar, text='Home', bg=side_bar_color, fg='white', font=('Bold', 15))
+library_page_lb=tk.Label(side_bar, text='Library', bg=side_bar_color, fg='white', font=('Bold', 15))
+browse_page_lb=tk.Label(side_bar, text='Browse', bg=side_bar_color, fg='white', font=('Bold', 15))
+create_page_lb=tk.Label(side_bar, text='Create', bg=side_bar_color, fg='white', font=('Bold', 15))
+liked_page_lb=tk.Label(side_bar, text='Liked', bg=side_bar_color, fg='white', font=('Bold', 15))
+
 
 page_frame.place(relwidth=1.0, relheight=1.0, x=200)
 home_page()
@@ -130,6 +148,7 @@ liked_side_place = tk.Label(side_bar, bg=side_bar_color)
 ########################################################################## ROZMIESZCZANIE ELEMENTÓW W OKNIE ##########################################################################
 
 side_bar.pack(side=tk.LEFT, fill="y", pady=3, padx=3)
+top_bar.place(x=45, relwidth=1.0)
 
 side_bar_btn.place(x=4, y=4)
 
@@ -149,5 +168,22 @@ browse_side_place.place(x=3, y=270, width=3, height=40)
 create_side_place.place(x=3, y=340, width=3, height=40) 
 liked_side_place.place(x=3, y=410, width=3, height=40) 
 label_info = tk.Label(root, text="", bg="white", fg="black", font=("Arial", 10), relief="solid")
+
+home_page_lb.place(x=45, y=130, width=100, height=40)
+library_page_lb.place(x=45, y=200, width=100, height=40)
+browse_page_lb.place(x=45, y=270, width=100, height=40)
+create_page_lb.place(x=45, y=340, width=100, height=40)
+liked_page_lb.place(x=45, y=410, width=100, height=40)
+
+
+
+
+
+
+search.place(x=220,y=6, height=30)
+search_label.place(x=160,y=6, height=30)
+search_btn.place(x=660, y=6, height=30)
+
+
 
 root.mainloop()
