@@ -4,7 +4,7 @@ def entry_but():
         entry=search_entry.get()
         print(entry)
 
-    # głowne okno
+    # głowne oknoAA
 root = tk.Tk()
 root.title("Srotify")
 root.geometry("800x600")
