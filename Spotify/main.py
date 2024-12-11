@@ -8,6 +8,7 @@ top_bar_color = '#383838'
 root_color='#181818'
 
 ########################################################################## FUNKCJE ##########################################################################
+connection = mysql.connector.connect(host="localhost", user="root", password="", database="test")
 
 #zmiana pasek pojawiający się przy ikonach w side bar
 def changing_color(label, page):
@@ -48,7 +49,16 @@ def home_page():
 
 def library_page():
     library_page_frame=tk.Frame(page_frame,bg=root_color)
-    lb=tk.Label(library_page_frame, text="Library page", font=('arial', 50)).place(x=100, y=200)
+    mycur=connection.cursor()
+    mycur.execute("SELECT Imie FROM test LIMIT 5")
+
+    result=mycur.fetchall()
+
+    x=100
+    for row in result:
+        lb=tk.Label(library_page_frame, text=row[0], font=('arial', 20), bg="gray", width="10", height="10").place(x=x, y=150)
+        x=x+200
+
     library_page_frame.pack(fill=tk.BOTH, expand=True)
     
 def browse_page():
@@ -175,10 +185,6 @@ library_page_lb.place(x=45, y=200, width=100, height=40)
 browse_page_lb.place(x=45, y=270, width=100, height=40)
 create_page_lb.place(x=45, y=340, width=100, height=40)
 liked_page_lb.place(x=45, y=410, width=100, height=40)
-
-
-
-
 
 
 search.place(x=220,y=6, height=30)
