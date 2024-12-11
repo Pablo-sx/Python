@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+import mysql.connector
 
 #kolory dla programu
 side_bar_color = '#383838'
