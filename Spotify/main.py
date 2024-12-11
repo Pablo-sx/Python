@@ -9,8 +9,9 @@ root_color='#181818'
 
 ########################################################################## FUNKCJE ##########################################################################
 connection = mysql.connector.connect(host="localhost", user="root", password="", database="test")
-
+mycur=connection.cursor()
 #zmiana pasek pojawiający się przy ikonach w side bar
+
 def changing_color(label, page):
     home_side_place.config(bg=side_bar_color)
     library_side_place.config(bg=side_bar_color)
@@ -49,9 +50,8 @@ def home_page():
 
 def library_page():
     library_page_frame=tk.Frame(page_frame,bg=root_color)
-    mycur=connection.cursor()
+    
     mycur.execute("SELECT Imie FROM test LIMIT 5")
-
     result=mycur.fetchall()
 
     x=100
@@ -67,8 +67,13 @@ def browse_page():
     browse_page_frame.pack(fill=tk.BOTH, expand=True)
 
 def create_page():
+    global add_imie, add_nazwisko, add_nralb
+
     create_page_frame=tk.Frame(page_frame,bg=root_color)
-    lb=tk.Label(create_page_frame, text="Create page", font=('arial', 50)).place(x=100, y=200)
+    add_imie=tk.Entry(create_page_frame, width=40).place(x=100, y=150)
+    add_nazwisko=tk.Entry(create_page_frame, width=40).place(x=100, y=190)
+    add_nralb=tk.Entry(create_page_frame, width=10).place(x=100, y=230)
+    submit=tk.Button(create_page_frame, text="Add!", bg="gray", command=add_to_db).place(x=100, y=270)
     create_page_frame.pack(fill=tk.BOTH, expand=True)
 
 def liked_page():
@@ -80,6 +85,12 @@ def entry_but():
     entry=search.get()
     print(entry)
 
+def add_to_db():
+    imie = add_imie.get()
+    nazwisko = add_nazwisko.get()
+    nralb = add_nralb.get()
+    query = "INSERT INTO test (Imie, Nazwisko, Numer_alb) VALUES (%s)"
+    mycur.execute(query, (imie,nazwisko,nralb))
 
 ########################################################################## ELEMENTY W OKNIE ##########################################################################
 
