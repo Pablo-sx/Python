@@ -1,11 +1,12 @@
 import tkinter as tk
+from PIL import Image, ImageTk
 from tkinter import messagebox
 import mysql.connector
 
 #kolory dla programu
-side_bar_color = '#383838'
-top_bar_color = '#383838'
-root_color='#181818'
+side_bar_color = '#181818'
+top_bar_color = '#181818'
+root_color='#282828'
 
 ########################################################################## FUNKCJE ##########################################################################
 connection = mysql.connector.connect(host="localhost", user="root", password="", database="test")
@@ -18,8 +19,7 @@ def changing_color(label, page):
     browse_side_place.config(bg=side_bar_color)
     create_side_place.config(bg=side_bar_color)
     liked_side_place.config(bg=side_bar_color)
-
-    label.config(bg='white')
+    #label.config(bg='white')
 
     for frame in page_frame.winfo_children():
         frame.destroy()
@@ -53,10 +53,20 @@ def library_page():
     
     mycur.execute("SELECT Imie FROM test LIMIT 5")
     result=mycur.fetchall()
-
+    library_page_frame.img = tk.PhotoImage(file='img/slav.png')
     x=100
+    y=175
+    lb1=tk.Label(library_page_frame, text="Polubione utwory",font=("Arial, 20"), bg=root_color, fg="white" ).place(x=100, y=125)
     for row in result:
-        lb=tk.Label(library_page_frame, text=row[0], font=('arial', 20), bg="gray", width="10", height="10").place(x=x, y=150)
+        lb1 = tk.Label(library_page_frame, width=150, height=200, image=library_page_frame.img).place(x=x, y=y)
+        #lb=tk.Label(library_page_frame, text=row[0], font=('arial', 20), bg="gray", width="10", height="10").place(x=x, y=150)
+        x=x+200
+    x=100
+    y=y+275
+    lb2=tk.Label(library_page_frame, text="Popularne utwory",font=("Arial, 20"), bg=root_color,fg="White" ).place(x=100, y=390)
+    for row in result:
+        lb1 = tk.Label(library_page_frame, width=150, height=200, image=library_page_frame.img).place(x=x, y=y)
+        #lb=tk.Label(library_page_frame, text=row[0], font=('arial', 20), bg="gray", width="10", height="10").place(x=x, y=150)
         x=x+200
 
     library_page_frame.pack(fill=tk.BOTH, expand=True)
@@ -66,24 +76,36 @@ def browse_page():
     lb=tk.Label(browse_page_frame, text="Browse page", font=('arial', 50)).place(x=100, y=200)
     browse_page_frame.pack(fill=tk.BOTH, expand=True)
 
+
 def create_page():
     global add_imie, add_nazwisko, add_nralb
 
     create_page_frame=tk.Frame(page_frame,bg=root_color)
-    add_imie=tk.Entry(create_page_frame, width=40).place(x=100, y=150)
-    add_nazwisko=tk.Entry(create_page_frame, width=40).place(x=100, y=190)
-    add_nralb=tk.Entry(create_page_frame, width=10).place(x=100, y=230)
-    submit=tk.Button(create_page_frame, text="Add!", bg="gray", command=add_to_db).place(x=100, y=270)
+    main_label=tk.Label(create_page_frame, text="Dodaj piosenki do listy",font=("Arial, 20"),fg='white',bg=root_color).place(x=100, y=100)
+    lb_imie=tk.Label(create_page_frame, text="Nazwa:", bg=root_color, fg=("gray")).place(x=100,y=150)
+    lb_album=tk.Label(create_page_frame, text="Album:", bg=root_color, fg=("gray")).place(x=100,y=190)
+    lb_nrpes=tk.Label(create_page_frame, text="Nr:", bg=root_color, fg=("gray")).place(x=100,y=230)
+
+
+    add_imie=tk.Entry(create_page_frame, width=40, bg=root_color,bd=0,relief="flat", fg="white").place(x=145, y=152)
+    add_nazwisko=tk.Entry(create_page_frame, width=40, bg=root_color,bd=0,relief="flat", fg="white").place(x=145, y=192)
+    add_nralb=tk.Entry(create_page_frame, width=40, bg=root_color,bd=0,relief="flat", fg="white").place(x=145, y=232)
+    submit=tk.Button(create_page_frame, text="Add!", bg="gray",bd=0,relief="flat" ,command=add_to_db).place(x=100, y=270)
     create_page_frame.pack(fill=tk.BOTH, expand=True)
 
 def liked_page():
-    liked_page_frame=tk.Frame(page_frame,bg=root_color)
-    lb=tk.Label(liked_page_frame, text="Liked page", font=('arial', 50)).place(x=100, y=200)
+    liked_page_frame = tk.Frame(page_frame, bg=root_color)
     liked_page_frame.pack(fill=tk.BOTH, expand=True)
+    lb=tk.Label(liked_page_frame, text="Liked page", font=('arial', 50)).place(x=100, y=200)
 
-def entry_but():
+def entry_but(event=None):
     entry=search.get()
-    print(entry)
+    if entry!="":
+        mycur.execute("SELECT * FROM test WHERE imie LIKE %s", (f"%{entry}%",))
+        result=mycur.fetchall()
+        print(result)
+        search.delete(0, "end")
+
 
 def add_to_db():
     imie = add_imie.get()
@@ -115,6 +137,7 @@ side_bar = tk.Frame(root, bg=side_bar_color, width=45)
 top_bar = tk.Frame(root, bg=top_bar_color, height=45)
 
 search=tk.Entry(top_bar, width=70)
+search.bind("<Return>", entry_but)
 search_label = tk.Label(top_bar, text="Search:", bg="#78DE78", fg="black")
 search_btn = tk.Button(top_bar, text="Go!", bg="#27D75C", fg="black", command=entry_but)
 
@@ -123,7 +146,6 @@ library_page_lb=tk.Label(side_bar, text='Library', bg=side_bar_color, fg='white'
 browse_page_lb=tk.Label(side_bar, text='Browse', bg=side_bar_color, fg='white', font=('Bold', 15))
 create_page_lb=tk.Label(side_bar, text='Create', bg=side_bar_color, fg='white', font=('Bold', 15))
 liked_page_lb=tk.Label(side_bar, text='Liked', bg=side_bar_color, fg='white', font=('Bold', 15))
-
 
 page_frame.place(relwidth=1.0, relheight=1.0, x=200)
 home_page()
