@@ -11,14 +11,12 @@ def loguj():
     pasw = pass_entry.get()
     
     # Poprawne zapytanie SQL z placeholderami
-    query = "SELECT * FROM test WHERE imie = %s AND nazwisko = %s"
+    query = "SELECT id FROM test WHERE imie = %s AND nazwisko = %s"
     values = (name, pasw)  # Tuple z wartościami
     
     try:
         mycur.execute(query, values)
         result = mycur.fetchall()  # Pobranie wyników zapytania
-        print("Imię:", name)
-        print("Nazwisko:", pasw)
         print("Wynik zapytania:", result)
     except Exception as e:
         print("Wystąpił błąd podczas wykonywania zapytania:", e)
