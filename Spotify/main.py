@@ -224,6 +224,4 @@ search.place(x=220,y=6, height=30)
 search_label.place(x=160,y=6, height=30)
 search_btn.place(x=660, y=6, height=30)
 
-
-
 root.mainloop()
