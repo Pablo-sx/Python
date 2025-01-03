@@ -50,36 +50,36 @@ def home_page():
     lb=tk.Label(home_page_frame, text="Home Page", font=('arial', 50)).place(x=100, y=200)
     home_page_frame.pack(fill=tk.BOTH, expand=True)
 
-def library_page():
-    library_page_frame=tk.Frame(page_frame,bg=root_color)
-    
-    mycur.execute("SELECT imie, zdjecie FROM zdjecia LIMIT 5")
-    result=mycur.fetchall()
 
-    #library_page_frame.img = tk.PhotoImage(file='img/slav.png')
-    x=100
-    y=175
-    lb1=tk.Label(library_page_frame, text="Polubione utwory",font=("Arial, 20"), bg=root_color, fg="white" ).place(x=100, y=125)
+
+def library_page():
+    library_page_frame = tk.Frame(page_frame, bg=root_color)
+
+    mycur.execute("SELECT imie, zdjecie FROM zdjecia LIMIT 5")
+    result = mycur.fetchall()
+
+    x = 100
+    y = 175
+    lb1 = tk.Label(library_page_frame, text="Polubione utwory", font=("Arial", 20), bg=root_color, fg="white")
+    lb1.place(x=100, y=125)
+
+    image_references = []  # Lista do przechowywania referencji do obrazów
+
     for row in result:
-        #lb1 = tk.Label(library_page_frame, width=150, height=200, image=library_page_frame.img).place(x=x, y=y)
-        #lb=tk.Label(library_page_frame, text=row[0], font=('arial', 20), bg="gray", width="10", height="10").place(x=x, y=150)
         name, image_blob = row
         image_data = io.BytesIO(image_blob)
-        pil_image = Image.open(image_data)
-        tk_image = ImageTk.PhotoImage(pil_image)
+        try:
+            pil_image = Image.open(image_data)
+            tk_image = ImageTk.PhotoImage(pil_image)
 
-        lb1 = tk.Label(library_page_frame, width=150, height=200, image=tk_image, bg=root_color)
-        lb1.image = tk_image  # Referencja zapobiega usunięciu obrazu z pamięci
-        lb1.place(x=x, y=y)
-        x=x+200
+            lb1 = tk.Label(library_page_frame, width=150, height=200, image=tk_image, bg=root_color)
+            lb1.image = tk_image  # Referencja lokalna dla widżetu
+            lb1.place(x=x, y=y)
 
-    #x=100
-    #y=y+275
-    #lb2=tk.Label(library_page_frame, text="Popularne utwory",font=("Arial, 20"), bg=root_color,fg="White" ).place(x=100, y=390)
-    #for row in result:
-    #    lb1 = tk.Label(library_page_frame, width=150, height=200, image=library_page_frame.img).place(x=x, y=y)
-    #    #lb=tk.Label(library_page_frame, text=row[0], font=('arial', 20), bg="gray", width="10", height="10").place(x=x, y=150)
-    #    x=x+200
+            image_references.append(tk_image)  # Przechowujemy referencję w liście
+            x += 200
+        except OSError:
+            print(f"Błąd podczas ładowania obrazu dla '{name}'.")
 
     library_page_frame.pack(fill=tk.BOTH, expand=True)
     
