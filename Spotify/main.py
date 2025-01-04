@@ -4,6 +4,7 @@ from PIL import Image, ImageTk
 from tkinter import messagebox
 import mysql.connector
 import io
+import sys
 
 #kolory dla programu
 side_bar_color = '#181818'
@@ -223,7 +224,7 @@ library_side_place.place(x=3, y=200, width=3, height=40)
 browse_side_place.place(x=3, y=270, width=3, height=40) 
 create_side_place.place(x=3, y=340, width=3, height=40) 
 liked_side_place.place(x=3, y=410, width=3, height=40) 
-label_info = tk.Label(root, text="", bg="white", fg="black", font=("Arial", 10), relief="solid")
+label_info = tk.Label(root, text="", bg="white", fg="black", font=("Arial, 40"), relief="solid")
 
 home_page_lb.place(x=45, y=130, width=100, height=40)
 library_page_lb.place(x=45, y=200, width=100, height=40)
@@ -231,9 +232,15 @@ browse_page_lb.place(x=45, y=270, width=100, height=40)
 create_page_lb.place(x=45, y=340, width=100, height=40)
 liked_page_lb.place(x=45, y=410, width=100, height=40)
 
+#user_id = sys.argv[1]
+#print(user_id)
 
 search.place(x=220,y=6, height=30)
 search_label.place(x=160,y=6, height=30)
 search_btn.place(x=660, y=6, height=30)
+
+imga=tk.PhotoImage(file="Img/library.png")
+user=tk.Label(top_bar,bg=top_bar_color, text="Pablo", fg='white', font=('Arail', 15)).pack(side=tk.RIGHT, padx=(10,60))
+img_test=tk.Label(top_bar,bg=top_bar_color, image=imga, height=40, width=40).pack(side=tk.RIGHT)
 
 root.mainloop()

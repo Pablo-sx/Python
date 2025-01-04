@@ -3,27 +3,25 @@ import tkinter as tk
 from tkinter import messagebox
 import mysql.connector
 
-connection = mysql.connector.connect(host="localhost", user="root", password="", database="test")
+connection = mysql.connector.connect(host="localhost", user="root", password="", database="projekt")
 mycur = connection.cursor()
 
 def loguj():
     name = name_entry.get()
     pasw = pass_entry.get()
 
-    query = "SELECT id FROM test WHERE imie = %s AND nazwisko = %s"
+    query = "SELECT user_id FROM users WHERE name = %s AND pass = %s"
     values = (name, pasw)
     
     mycur.execute(query, values)
-    result = mycur.fetchall()
+    result = mycur.fetchone()
         
     if result:
-        messagebox.showinfo("Sukces", "Logowanie udane!")
+        id=result[0]
         root.destroy()
-            
-        subprocess.run(["py", "main.py"])
+        subprocess.run(["py", "main.py", str(id)])
     else:
         messagebox.showerror("Błąd", "Niepoprawne dane logowania!")
-
 root_color = "#282828"
 
 root = tk.Tk()
