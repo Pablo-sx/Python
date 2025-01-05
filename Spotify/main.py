@@ -18,7 +18,7 @@ mycur=connection.cursor()
 
 def show_song(page, img_blob, x, y):
     # Tworzenie ramki
-    frame = tk.Frame(page, height=350, width=180, bg="red")
+    frame = tk.Frame(page, height=200, width=150, bg="red")
     frame.place(x=x, y=y)
 
     # Wczytywanie głównego obrazu z bazy danych
@@ -35,24 +35,25 @@ def show_song(page, img_blob, x, y):
     lb.image = img
     lb.pack()
     
-    
-
-    # Przycisk "Lubię to"
     like_btn = tk.Button(frame, image=like, bg=root_color, bd=0, activebackground=root_color)
     like_btn.image = like
     like_btn.pack(pady=5)
 
 def changing_color(label, page):
+
     home_side_place.config(bg=side_bar_color)
     library_side_place.config(bg=side_bar_color)
     browse_side_place.config(bg=side_bar_color)
     create_side_place.config(bg=side_bar_color)
     liked_side_place.config(bg=side_bar_color)
 
+    label.config(bg="white")
+
     for frame in page_frame.winfo_children():
         frame.destroy()
-    page()
 
+    page()
+    
 def info_show(event):
     label_info.place(x=event.x_root - root.winfo_rootx() + 10, 
                      y=event.y_root - root.winfo_rooty() + 10)
@@ -86,7 +87,7 @@ def home_page():
 def library_page():
     library_page_frame = tk.Frame(page_frame, bg=root_color)
 
-    mycur.execute("SELECT imie, zdjecie FROM zdjecia LIMIT 5")
+    mycur.execute("SELECT img FROM albums LIMIT 5")
     result = mycur.fetchall()
 
     x = 100
@@ -94,24 +95,10 @@ def library_page():
     lb1 = tk.Label(library_page_frame, text="Polubione utwory", font=("Arial", 20), bg=root_color, fg="white")
     lb1.place(x=100, y=125)
 
-    image_references = []  # Lista do przechowywania referencji do obrazów
-
     for row in result:
-        name, image_blob = row
-        image_data = io.BytesIO(image_blob)
-        try:
-            pil_image = Image.open(image_data)
-            tk_image = ImageTk.PhotoImage(pil_image)
-            
-            lb1 = tk.Label(library_page_frame, width=150, height=200, image=tk_image, bg=root_color)
-            lb1.image = tk_image  # Referencja lokalna dla widżetu
-            lb1.place(x=x, y=y)
-
-            image_references.append(tk_image)  # Przechowujemy referencję w liście
-            x += 200
-        except OSError:
-            print(f"Błąd podczas ładowania obrazu dla '{name}'.")
-
+        show_song(page=library_page_frame, img_blob=row[0], x=x, y=y)
+        x += 200
+     
     library_page_frame.pack(fill=tk.BOTH, expand=True)
     
 def browse_page():
@@ -200,10 +187,10 @@ home_btn = tk.Button(side_bar, bg=side_bar_color, image=image_home,
                                     page=home_page)
 )
 
-library_btn = tk.Button(side_bar, bg=side_bar_color, image=image_library, 
-    bd=0, activebackground=side_bar_color, 
-    command=lambda: changing_color(library_side_place, 
-                                    page=library_page)
+library_btn = tk.Button(
+    side_bar, bg=side_bar_color, image=image_library,
+    bd=0, activebackground=side_bar_color,
+    command=lambda: changing_color(label=library_side_place, page=library_page)
 )
 
 browse_btn = tk.Button(side_bar, bg=side_bar_color, image=image_browse, 
