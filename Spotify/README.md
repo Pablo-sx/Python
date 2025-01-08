@@ -1,3 +1,4 @@
 - projekt na zaliczenie z programowania obiektowego
 - puknty do zrobienia
 - ZDAĆ (opcjonalne)
+- wyrobić się w kolejne 2 tygodnie (nie opcjonalne)
