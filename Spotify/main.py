@@ -16,23 +16,18 @@ connection = mysql.connector.connect(host="localhost", user="root", password="",
 mycur=connection.cursor()
 #zmiana pasek pojawiający się przy ikonach w side bar
 
-def show_song(page, img_blob, x, y):
-    # Tworzenie ramki
+def show_song(page, x, y):
+
     frame = tk.Frame(page, height=200, width=150, bg="red")
     frame.place(x=x, y=y)
 
-    # Wczytywanie głównego obrazu z bazy danych
-    image_data = io.BytesIO(img_blob)
-    r_image = Image.open(image_data)
-    r_image = r_image.resize((150, 200))  # Skalowanie obrazu
-    img = ImageTk.PhotoImage(r_image)
 
     like_img = Image.open("Img/liked.png")
-    like_img = like_img.resize((20, 20))  # Skalowanie ikony
+    like_img = like_img.resize((20, 20))
     like = ImageTk.PhotoImage(like_img)
-
-    lb = tk.Label(frame, image=img, bg=root_color)
-    lb.image = img
+    disc=PhotoImage(file="img/disc.png")
+    lb = tk.Label(frame, image=disc, bg=root_color)
+    lb.image = disc
     lb.pack()
     
     like_btn = tk.Button(frame, image=like, bg=root_color, bd=0, activebackground=root_color)
@@ -74,13 +69,7 @@ def hide_side_bar():
 def home_page():
     home_page_frame=tk.Frame(page_frame,bg=root_color)
     lb=tk.Label(home_page_frame, text="Home Page", font=('arial', 50)).place(x=100, y=200)
-
     user_id=1
-    query1="SELECT prof_img FROM users WHERE user_id=%s"
-    mycur.execute(query1,(1,))
-    result=mycur.fetchone()
-    show_song(page=home_page_frame, img_blob=result[0], x=200, y=300)
-    
     home_page_frame.pack(fill=tk.BOTH, expand=True)
 
 
@@ -96,7 +85,7 @@ def library_page():
     lb1.place(x=100, y=125)
 
     for row in result:
-        show_song(page=library_page_frame, img_blob=row[0], x=x, y=y)
+        show_song(page=library_page_frame, x=x, y=y)
         x += 200
      
     library_page_frame.pack(fill=tk.BOTH, expand=True)
@@ -254,19 +243,9 @@ user_id = sys.argv[1]
 search.place(x=220,y=6, height=30)
 search_label.place(x=160,y=6, height=30)
 search_btn.place(x=660, y=6, height=30)
-query1="SELECT name, prof_img FROM users WHERE user_id=%s"
+query1="SELECT name FROM users WHERE user_id=%s"
 mycur.execute(query1,(user_id,))
 result=mycur.fetchone()
-
-
-or_img = result[1]
-img_s=io.BytesIO(or_img)
-o_img=Image.open(img_s)
-
-r_img=o_img.resize((40,40))
-imga = ImageTk.PhotoImage(r_img)
 user=tk.Label(top_bar,bg=top_bar_color, text=result[0], fg='white', font=('Arail', 15)).pack(side=tk.RIGHT, padx=(10,60))
-img_test=tk.Label(top_bar,bg=top_bar_color, image=imga)
-img_test.pack(side=tk.RIGHT)
 
 root.mainloop()
