@@ -1,0 +1,3 @@
+- projekt na zaliczenie z programowania obiektowego
+- puknty do zrobienia
+- ZDAĆ (opcjonalne)
